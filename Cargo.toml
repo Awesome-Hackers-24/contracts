@@ -1,0 +1,22 @@
+[package]
+name = "brain-nfts"
+version = "0.0.0"
+authors = ["Andrei Marinica <andrei.marinica@multiversx.com>"]
+edition = "2021"
+publish = false
+
+[lib]
+path = "src/brain_nfts.rs"
+
+[dependencies.multiversx-sc]
+version = "0.48.0"
+
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.48.0"
+
+[workspace]
+members = [
+    ".",
+    "meta",
+    "interact",
+]
