@@ -98,7 +98,7 @@ pub trait BrainNfts: storage::StorageModule {
             &owner,
             &pay_token,
             0,
-            &(pay_amount - ref_amount - discount_amount),
+            &(pay_amount),
             &[],
         );
     }
