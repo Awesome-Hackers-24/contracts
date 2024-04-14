@@ -7,7 +7,7 @@ mod storage;
 /// One of the simplest smart contracts possible,
 /// it holds a single variable in storage, which anyone can increment.
 #[multiversx_sc::contract]
-pub trait BrainNfts {
+pub trait BrainNfts: storage::StorageModule {
     #[view(getSum)]
     #[storage_mapper("sum")]
     fn sum(&self) -> SingleValueMapper<BigUint>;
@@ -87,11 +87,20 @@ pub trait BrainNfts {
     }
 
     #[endpoint]
-    fn claim_nft() {
+    fn mint(&self) {
         require!(self.is_paused().get() == false, "Contract is paused");
 
-        let caller = self.blockchain().get_caller_address();
+        let caller = self.blockchain().get_caller();
+        let owner = self.blockchain().get_owner_address();
         let token_id = self.nft_token_id().get();
+
+        self.send().direct(
+            &owner,
+            &pay_token,
+            0,
+            &(pay_amount - ref_amount - discount_amount),
+            &[],
+        );
     }
 
     /// Add desired amount to the storage variable.
